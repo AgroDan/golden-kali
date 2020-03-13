@@ -10,6 +10,8 @@
 - Chisel: https://github.com/jpillora/chisel
 - LinEnum: https://github.com/rebootuser/LinEnum
 - PEASS: https://github.com/carlospolop/privilege-escalation-awesome-scripts-suite
+- PowerSploit: https://github.com/PowerShellMafia/PowerSploit
+  - (then switch to Dev branch) git checkout dev
 
 ## Misc
 - FoxyProxy for firefox
