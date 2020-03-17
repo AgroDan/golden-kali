@@ -3,6 +3,7 @@
 - terminator
 - jxplorer
 - seclists
+- gobuster
 
 ## From github:
 - JumboJohn: https://github.com/magnumripper/JohnTheRipper
