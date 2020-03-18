@@ -13,6 +13,8 @@
 - PEASS: https://github.com/carlospolop/privilege-escalation-awesome-scripts-suite
 - PowerSploit: https://github.com/PowerShellMafia/PowerSploit
   - (then switch to Dev branch) git checkout dev
+- Impacket: https://github.com/SecureAuthCorp/impacket
+  - Impacket scripts come with Kali, but git repo is more recent. MAKE SURE YOU USE PYTHON3!
 
 ## Misc
 - FoxyProxy for firefox
