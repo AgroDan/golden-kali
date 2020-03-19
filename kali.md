@@ -4,6 +4,7 @@
 - jxplorer
 - seclists
 - gobuster
+- python3-pip
 
 ## From github:
 - JumboJohn: https://github.com/magnumripper/JohnTheRipper
@@ -14,7 +15,7 @@
 - PowerSploit: https://github.com/PowerShellMafia/PowerSploit
   - (then switch to Dev branch) git checkout dev
 - Impacket: https://github.com/SecureAuthCorp/impacket
-  - Impacket scripts come with Kali, but git repo is more recent. MAKE SURE YOU USE PYTHON3!
+  - Impacket scripts come with Kali, but git repo is more recent. Use the setup.py to build and install before using. Then use python3 to execute!
 
 ## Misc
 - FoxyProxy for firefox
