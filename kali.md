@@ -19,3 +19,4 @@
 
 ## Misc
 - FoxyProxy for firefox
+- Evil-WinRM, install from gem: gem install evil-winrm
