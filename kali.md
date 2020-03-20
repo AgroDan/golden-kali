@@ -20,3 +20,6 @@
 ## Misc
 - FoxyProxy for firefox
 - Evil-WinRM, install from gem: gem install evil-winrm
+- Remove stupid mouse bindings in vim. Edit /etc/vim/vimrc and add:
+  - set mouse=
+  - set ttymouse=
