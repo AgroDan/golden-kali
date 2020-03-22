@@ -5,6 +5,8 @@
 - seclists
 - gobuster
 - python3-pip
+- crackmapexec
+- neo4j (for bloodhound)
 
 ## From github:
 - JumboJohn: https://github.com/magnumripper/JohnTheRipper
@@ -16,6 +18,10 @@
   - (then switch to Dev branch) git checkout dev
 - Impacket: https://github.com/SecureAuthCorp/impacket
   - Impacket scripts come with Kali, but git repo is more recent. Use the setup.py to build and install before using. Then use python3 to execute!
+- Bloodhound: https://github.com/BloodHoundAD/BloodHound
+  - start up neo4j: neo4j console
+  - Visit the resulting localhost port
+  - Create a password for the neo4j user
 
 ## Misc
 - FoxyProxy for firefox
