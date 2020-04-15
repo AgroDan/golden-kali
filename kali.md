@@ -12,6 +12,7 @@
 - eog
 - xclip
 - exif
+- steghide
 
 ## From github:
 - JumboJohn: https://github.com/magnumripper/JohnTheRipper
