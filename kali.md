@@ -9,6 +9,8 @@
 - neo4j (for bloodhound)
 - openjdk-14-jdk (for things that are still made in Java for some reason like Ghidra)
 - rlwrap
+- eog
+- xclip
 
 ## From github:
 - JumboJohn: https://github.com/magnumripper/JohnTheRipper
