@@ -11,6 +11,7 @@
 - rlwrap
 - eog
 - xclip
+- exif
 
 ## From github:
 - JumboJohn: https://github.com/magnumripper/JohnTheRipper
