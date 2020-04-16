@@ -9,7 +9,7 @@ echo "***********************************"
 echo "*        Installing pip           *"
 echo "***********************************"
 
-curl -s https://bootstrap.pypa.io/get-pip.py -o get-pip.py
+curl -s https://bootstrap.pypa.io/get-pip.py -o /tmp/get-pip.py
 python3 get-pip.py --user
 
 export PATH=$PATH:/root/.local/bin
@@ -24,7 +24,7 @@ echo "***********************************"
 echo "*      Running Kali playbook      *"
 echo "***********************************"
 
-curl -s http://raw.githubusercontent.com/AgroDan/FreshInstall/master/kali.yml -o kali.yml
+curl -s http://raw.githubusercontent.com/AgroDan/FreshInstall/master/kali.yml -o /tmp/kali.yml
 
 ansible-playbook ./kali.yml
 
@@ -32,7 +32,7 @@ echo "***********************************"
 echo "*          Cleaning up            *"
 echo "***********************************"
 
-rm -f ./get-pip.py ./kali.yml
+rm -f /tmp/get-pip.py /tmp/kali.yml
 
 echo "***********************************"
 echo "*             Done!               *"
