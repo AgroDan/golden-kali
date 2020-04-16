@@ -26,7 +26,7 @@ echo "***********************************"
 
 curl -sL http://raw.github.com/AgroDan/FreshInstall/master/kali.yml -o /tmp/kali.yml
 
-ansible-playbook ./kali.yml
+ansible-playbook /tmp/kali.yml
 
 echo "***********************************"
 echo "*          Cleaning up            *"
