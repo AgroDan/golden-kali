@@ -24,7 +24,7 @@ echo "***********************************"
 echo "*      Running Kali playbook      *"
 echo "***********************************"
 
-curl -s http://raw.githubusercontent.com/AgroDan/FreshInstall/master/kali.yml -o /tmp/kali.yml
+curl -sL http://raw.github.com/AgroDan/FreshInstall/master/kali.yml -o /tmp/kali.yml
 
 ansible-playbook ./kali.yml
 
