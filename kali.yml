@@ -1,0 +1,77 @@
+---
+  - hosts: localhost
+    tasks:
+    - name: Installing base packages from apt
+      package:
+        name:
+        - terminator
+        - jxplorer
+        - seclists
+        - gobuster
+        - python3-pip
+        - crackmapexec
+        - neo4j
+        - openjdk-14-jdk
+        - rlwrap
+        - eog
+        - xclip
+        - exif
+        - steghide
+        - git
+        state: latest
+    
+    - name: Ensuring all packages are up to date
+      apt:
+        update_cache: yes
+        upgrade: dist
+
+    - name: Clone JumboJohn
+      git:
+        repo: 'https://github.com/magnumripper/JohnTheRipper'
+        dest: /opt/JohnTheRipper
+    
+    - name: Clone Nishang
+      git:
+        repo: 'https://github.com/samratashok/nishang'
+        dest: /opt/nishang
+    
+    - name: Clone Chisel
+      git:
+        repo: 'https://github.com/jpillora/chisel'
+        dest: /opt/chisel
+    
+    - name: Clone LinEnum
+      git:
+        repo: 'https://github.com/rebootuser/LinEnum'
+        dest: /opt/LinEnum
+    
+    - name: Clone PEASS
+      git:
+        repo: 'https://github.com/carlospolop/privilege-escalation-awesome-scripts-suite'
+        dest: /opt/privilege-escalation-awesome-scripts-suite
+    
+    - name: Clone PowerSploit
+      git:
+        repo: 'https://github.com/PowerShellMafia/PowerSploit'
+        dest: /opt/PowerSploit
+    
+    - name: Clone Impacket
+      git:
+        repo: 'https://github.com/SecureAuthCorp/impacket'
+        dest: /opt/impacket
+    
+    - name: Clone Bloodhound
+      git:
+        repo: 'https://github.com/BloodHoundAD/BloodHound'
+        dest: /opt/BloodHound
+    
+    - name: Get Evil-WinRM via gem installer
+      gem:
+        name: evil-winrm
+        state: latest
+        user_install: no
+    
+    - name: Disable mouse interactivity in vim
+      command:
+        cmd: echo -e "set mouse=\nset ttymouse=\n" >> /etc/vim/vimrc
+        removes: /etc/vim/vimrc
