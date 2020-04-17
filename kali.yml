@@ -34,7 +34,7 @@
         - exif
         - steghide
         - git
-        - docker-ce
+        - docker
         - docker-compose
         state: latest
 
