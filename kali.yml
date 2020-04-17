@@ -72,6 +72,10 @@
         user_install: no
     
     - name: Disable mouse interactivity in vim
-      command:
-        cmd: echo -e "set mouse=\nset ttymouse=\n" >> /etc/vim/vimrc
-        removes: /etc/vim/vimrc
+      lineinfile:
+        path: /var/etc/vimrc
+        insertafter: EOF
+        state: present
+        line:
+          - "set mouse="
+          - "set ttymouse="
