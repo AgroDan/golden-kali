@@ -10,7 +10,7 @@ echo "*        Installing pip           *"
 echo "***********************************"
 
 curl -s https://bootstrap.pypa.io/get-pip.py -o /tmp/get-pip.py
-python3 /tmp/get-pip.py --user
+python3 /tmp/get-pip.py --user --no-warn-script-location
 
 export PATH=$PATH:/root/.local/bin
 

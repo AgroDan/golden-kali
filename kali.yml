@@ -1,7 +1,12 @@
 ---
   - hosts: localhost
     tasks:
-    - name: Installing base packages from apt
+    - name: Ensuring all packages are up to date
+      apt:
+        update_cache: yes
+        upgrade: dist
+
+    - name: Installing one-off packages from package manager
       package:
         name:
         - terminator
@@ -19,11 +24,6 @@
         - steghide
         - git
         state: latest
-    
-    - name: Ensuring all packages are up to date
-      apt:
-        update_cache: yes
-        upgrade: dist
 
     - name: Clone JumboJohn
       git:
@@ -72,10 +72,11 @@
         user_install: no
     
     - name: Disable mouse interactivity in vim
-      lineinfile:
-        path: /var/etc/vimrc
+      blockinfile:
+        path: /etc/vim/vimrc
         insertafter: EOF
         state: present
-        line:
-          - "set mouse="
-          - "set ttymouse="
+        block: |
+          " Added with ansible
+          set mouse=
+          set ttymouse=
