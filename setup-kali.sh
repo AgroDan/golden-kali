@@ -21,6 +21,12 @@ echo "***********************************"
 pip install ansible
 
 echo "***********************************"
+echo "*      Pulling master bashrc      *"
+echo "***********************************"
+
+curl -sL http://raw.github.com/AgroDan/FreshInstall/master/master-bashrc -o /tmp/master-bashrc
+
+echo "***********************************"
 echo "*      Running Kali playbook      *"
 echo "***********************************"
 

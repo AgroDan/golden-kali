@@ -1,15 +1,18 @@
 ---
   - hosts: localhost
     become: yes
+    vars:
+      docker_repo_key: "https://download.docker.com/linux/debian/gpg"
+      docker_repo: "deb [arch=amd64] https://download.docker.com/linux/debian buster stable"
     tasks:
     - name: Add docker repo key
       apt_key:
-        url: https://download.docker.com/linux/debian/gpg
+        url: "{{ docker_repo_key }}"
         state: present
     
     - name: Add docker repo
       apt_repository:
-        repo: "deb [arch=amd64] https://download.docker.com/linux/debian buster stable"
+        repo: "{{ docker_repo }}"
         state: present
     
     - name: Ensuring all packages are up to date
@@ -92,3 +95,10 @@
         block: |
           set mouse=
           set ttymouse=
+    
+    - name: Copying over bashrc file
+      copy:
+        src: /tmp/master-bashrc
+        dest: /root/.bashrc
+        owner: root
+        group: root
