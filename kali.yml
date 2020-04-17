@@ -1,6 +1,17 @@
 ---
   - hosts: localhost
+    become: yes
     tasks:
+    - name: Add docker repo key
+      apt_key:
+        url: https://download.docker.com/linux/debian/gpg
+        state: present
+    
+    - name: Add docker repo
+      apt_repository:
+        repo: "deb [arch=amd64] https://download.docker.com/linux/debian buster stable"
+        state: present
+    
     - name: Ensuring all packages are up to date
       apt:
         update_cache: yes
@@ -23,6 +34,8 @@
         - exif
         - steghide
         - git
+        - docker-ce
+        - docker-compose
         state: latest
 
     - name: Clone JumboJohn
@@ -77,6 +90,5 @@
         insertafter: EOF
         state: present
         block: |
-          " Added with ansible
           set mouse=
           set ttymouse=
