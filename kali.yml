@@ -38,6 +38,7 @@
         - steghide
         - git
         - ltrace
+        - strace
         - gdb
         - gdbserver
         - docker
