@@ -38,6 +38,8 @@
         - steghide
         - git
         - ltrace
+        - gdb
+        - gdbserver
         - docker
         - docker-compose
         state: latest
@@ -81,6 +83,14 @@
       git:
         repo: 'https://github.com/BloodHoundAD/BloodHound'
         dest: /opt/BloodHound
+
+    - name: Clone Gef
+      git:
+        repo: 'https://github.com/hugsy/gef.git'
+        dest: /opt/gef
+    
+    - name: Initialize Gef
+      script: /opt/gef/scripts/gef.sh
     
     - name: Get Evil-WinRM via gem installer
       gem:
