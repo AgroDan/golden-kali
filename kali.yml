@@ -34,7 +34,6 @@
         - rlwrap
         - eog
         - xclip
-        - exif
         - steghide
         - git
         - ltrace
