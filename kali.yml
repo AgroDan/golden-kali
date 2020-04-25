@@ -43,6 +43,7 @@
         - gdbserver
         - docker
         - docker-compose
+        - forensics-extra
         state: latest
 
     - name: Clone JumboJohn
