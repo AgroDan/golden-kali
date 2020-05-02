@@ -43,6 +43,8 @@
         - docker
         - docker-compose
         - forensics-extra
+        - ncat
+        - jq
         state: latest
 
     - name: Clone JumboJohn
