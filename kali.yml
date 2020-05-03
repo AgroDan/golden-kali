@@ -46,9 +46,10 @@
         - ncat
         - jq
         - powershell
+        - samba
         state: latest
     
-    - name: Clone Invoke-Obfuscation
+    - name: Clone Invoke-Obfuscation (•_•) ( •_•)>⌐■-■ (⌐■_■)
       git:
         repo: 'https://github.com/danielbohannon/Invoke-Obfuscation'
         dest: /opt/Invoke-Obfuscation
@@ -107,7 +108,7 @@
         state: latest
         user_install: no
     
-    - name: Disable mouse interactivity in vim
+    - name: Disable mouse interactivity in vim (╯°□°)╯︵ ┻━┻
       blockinfile:
         path: /etc/vim/vimrc
         insertafter: EOF
@@ -122,3 +123,29 @@
         dest: /root/.bashrc
         owner: root
         group: root
+
+    - name: Create /srv/smb/ directory for payload population
+      file:
+        path: /srv/smb
+        state: directory
+        mode: '0755'
+        
+    - name: Creating IWR share in samba config
+      blockinfile:
+        path: /etc/samba/smb.conf
+        insertafter: EOF
+        state: present
+        block: |
+          [iwr]
+            comment = Invoke-WebReq'd em? Damn near killed em!
+            path = /srv/smb
+            guest ok = yes
+            browseable = yes
+            create mask = 0600
+            directory mask = 0755
+
+    - name: Ensure that samba doesn't start on boot
+      systemd:
+        name: smbd
+        enabled: no
+        state: stopped
