@@ -45,8 +45,14 @@
         - forensics-extra
         - ncat
         - jq
+        - powershell
         state: latest
-
+    
+    - name: Clone Invoke-Obfuscation
+      git:
+        repo: 'https://github.com/danielbohannon/Invoke-Obfuscation'
+        dest: /opt/Invoke-Obfuscation
+    
     - name: Clone JumboJohn
       git:
         repo: 'https://github.com/magnumripper/JohnTheRipper'
