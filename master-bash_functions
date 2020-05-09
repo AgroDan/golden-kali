@@ -1,0 +1,9 @@
+# This is a file I will store all bash functions I use
+
+scan() {
+    echo "Scanning with masscan..."
+    echo "If this takes way too long, ping $1 in a separate terminal"
+    echo "because masscan has a weird bug that holds connections open or something"
+    P=$(masscan -p 1-65535 -e tun0 --rate=1000 $1 | grep Discovered | awk '{print $4}' | cut -d/ -f1 | tr "\n" "," | sed 's/\,$/\n/') ; nmap -sC -sV -p $P -oN scanresults-$1.txt $1
+    echo "Stored results in scanresults-$1.txt"
+}
