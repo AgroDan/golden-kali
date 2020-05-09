@@ -27,6 +27,12 @@ echo "***********************************"
 curl -sL http://raw.github.com/AgroDan/FreshInstall/master/master-bashrc -o /tmp/master-bashrc
 
 echo "***********************************"
+echo "*     Pulling bash_functions      *"
+echo "***********************************"
+
+curl -sL http://raw.github.com/AgroDan/FreshInstall/master/master-bash_functions -o /tmp/master-bashrc
+
+echo "***********************************"
 echo "*      Running Kali playbook      *"
 echo "***********************************"
 
@@ -38,7 +44,7 @@ echo "***********************************"
 echo "*          Cleaning up            *"
 echo "***********************************"
 
-rm -f /tmp/get-pip.py /tmp/kali.yml
+rm -f /tmp/master-bash* /tmp/get-pip.py /tmp/kali.yml
 
 echo "***********************************"
 echo "*             Done!               *"
