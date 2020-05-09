@@ -124,6 +124,13 @@
         owner: root
         group: root
 
+    - name: Copying over bash functions file
+      copy:
+        src: /tmp/master-bash_functions
+        dest: /root/.bash_functions
+        owner: root
+        group: root
+
     - name: Create /srv/smb/ directory for payload population
       file:
         path: /srv/smb
