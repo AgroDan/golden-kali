@@ -33,6 +33,12 @@ echo "***********************************"
 curl -sL http://raw.github.com/AgroDan/FreshInstall/master/master-bash_functions -o /tmp/master-bash_functions
 
 echo "***********************************"
+echo "*       Pulling .tmux.conf        *"
+echo "***********************************"
+
+curl -sL http://raw.github.com/AgroDan/FreshInstall/master/master-tmux_conf -o /tmp/master-tmux_conf
+
+echo "***********************************"
 echo "*      Running Kali playbook      *"
 echo "***********************************"
 
@@ -44,7 +50,7 @@ echo "***********************************"
 echo "*          Cleaning up            *"
 echo "***********************************"
 
-rm -f /tmp/master-bash* /tmp/get-pip.py /tmp/kali.yml
+rm -f /tmp/master-bashrc /tmp/master-bash_functions /tmp/master-tmux_conf /tmp/get-pip.py /tmp/kali.yml
 
 echo "***********************************"
 echo "*             Done!               *"

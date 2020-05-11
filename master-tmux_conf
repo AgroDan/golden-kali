@@ -1,0 +1,14 @@
+# remap CTRL-b to CTRL-a because it's better
+unbind C-b
+set-option -g prefix C-a
+bind-key C-a send-prefix
+
+# vi master race
+set -g mode-keys vi
+set -sg escape-time 0
+
+# I <3 history
+set -g history-limit 500000
+
+# colors!
+set -g default-terminal "screen-256color"

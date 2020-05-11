@@ -47,6 +47,7 @@
         - jq
         - powershell
         - samba
+        - tmux
         state: latest
     
     - name: Clone Invoke-Obfuscation (•_•) ( •_•)>⌐■-■ (⌐■_■)
@@ -128,6 +129,13 @@
       copy:
         src: /tmp/master-bash_functions
         dest: /root/.bash_functions
+        owner: root
+        group: root
+
+    - name: Copying over tmux config
+      copy:
+        src: /tmp/master-tmux_conf
+        dest: /root/.tmux.conf
         owner: root
         group: root
 
