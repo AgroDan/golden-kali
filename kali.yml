@@ -48,6 +48,8 @@
         - powershell
         - samba
         - tmux
+        - openjdk-13-jre
+        - openjdk-13-jdk
         state: latest
     
     - name: Clone Invoke-Obfuscation (•_•) ( •_•)>⌐■-■ (⌐■_■)
