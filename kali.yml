@@ -50,6 +50,7 @@
         - tmux
         - openjdk-13-jre
         - openjdk-13-jdk
+        - libssl-dev
         state: latest
     
     - name: Clone Invoke-Obfuscation (•_•) ( •_•)>⌐■-■ (⌐■_■)
@@ -61,6 +62,13 @@
       git:
         repo: 'https://github.com/magnumripper/JohnTheRipper'
         dest: /opt/JohnTheRipper
+    
+    - name: Compiling JumboJohn, hold onto yer butts...
+      command: chdir=/opt/JohnTheRipper/src {{ item }}
+      with_items:
+      - ./configure
+      - make
+      - make install
     
     - name: Clone Nishang
       git:
