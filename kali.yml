@@ -51,13 +51,22 @@
         - openjdk-13-jre
         - openjdk-13-jdk
         - libssl-dev
+        - python3
+        - python3-pip
+        - python3-dev
+        - libffi-dev
+        - build-essential
         state: latest
     
+    - name: Install pwntools
+      pip:
+        name: git+https://github.com/Gallopsled/pwntools.git@dev
+
     - name: Clone Invoke-Obfuscation (•_•) ( •_•)>⌐■-■ (⌐■_■)
       git:
         repo: 'https://github.com/danielbohannon/Invoke-Obfuscation'
         dest: /opt/Invoke-Obfuscation
-    
+
     - name: Clone JumboJohn
       git:
         repo: 'https://github.com/magnumripper/JohnTheRipper'
