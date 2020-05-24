@@ -7,4 +7,4 @@ If you just started up a new instance of Kali, to get it to a "proper working se
 
 `curl -sL https://raw.github.com/AgroDan/FreshInstall/master/setup-kali.sh | sudo bash`
 
-I know the flippant instruction of "copy this curl | bash command as root" is scary, but this is after all github, so feel free to look through the provided code to know that I'm not installing some crazy backdoor or anything. I may be install malicious software, but I wish no mal-intent to you. Peace, love, and hack all the things.
+I know the flippant instruction of "copy this curl | bash command as root" is scary, but this is after all github, so feel free to look through the provided code to know that I'm not installing some crazy backdoor or anything. I may be installing malicious software, but I wish no mal-intent to you. Peace, love, and hack all the things.
