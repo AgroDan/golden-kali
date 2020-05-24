@@ -58,6 +58,11 @@
         - build-essential
         state: latest
     
+    - name: Install ShellUp!
+      git:
+        repo: 'https://github.com/AgroDan/shellup.git'
+        dest: /opt/shellup
+    
     - name: Install pwntools
       pip:
         name: git+https://github.com/Gallopsled/pwntools.git@dev
