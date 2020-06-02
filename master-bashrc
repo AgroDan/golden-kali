@@ -98,7 +98,7 @@ fi
 
 # I like my own functions file
 if [ -f ~/.bash_functions ]; then
-    . ~/.bash_functions ]; then
+    . ~/.bash_functions
 fi
 
 # enable programmable completion features (you don't need to enable
