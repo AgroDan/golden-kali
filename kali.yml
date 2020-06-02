@@ -135,6 +135,7 @@
     - name: Disable mouse interactivity in vim (╯°□°)╯︵ ┻━┻
       blockinfile:
         path: /etc/vim/vimrc
+        marker: "\" {mark} ANSIBLE MANAGED BLOCK"
         insertafter: EOF
         state: present
         block: |
