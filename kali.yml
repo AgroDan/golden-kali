@@ -23,6 +23,7 @@
     - name: Installing one-off packages from package manager
       package:
         name:
+        - awk
         - terminator
         - jxplorer
         - seclists
@@ -123,9 +124,6 @@
         repo: 'https://github.com/hugsy/gef.git'
         dest: /opt/gef
     
-    - name: Initialize Gef
-      script: /opt/gef/scripts/gef.sh
-    
     - name: Get Evil-WinRM via gem installer
       gem:
         name: evil-winrm
@@ -142,26 +140,40 @@
           set mouse=
           set ttymouse=
     
-    - name: Copying over bashrc file
+    - name: Getting all interactive users <<hack hack hack>>
+      shell: "awk -F: '{ if (($3 >= 1000 && $3 != 65534) || $3 == 0) print $1}' /etc/passwd"
+      register: user_home
+    
+    - name: Initialize Gef for all users
+      shell: "su -c /opt/gef/scripts/gef.sh {{item}}"
+      loop: "{{user_home.stdout_lines}}"
+    
+    - name: Copying over bashrc file to all users
       copy:
         src: /tmp/master-bashrc
-        dest: /root/.bashrc
-        owner: root
-        group: root
+        dest: "~{{item}}/.bashrc"
+        owner: "{{item}}"
+        group: "{{item}}"
+        mode: '0640'
+      loop: "{{user_home.stdout_lines}}"
 
-    - name: Copying over bash functions file
+    - name: Copying over bash functions file for all users
       copy:
         src: /tmp/master-bash_functions
-        dest: /root/.bash_functions
-        owner: root
-        group: root
+        dest: "~{{item}}/.bash_functions"
+        owner: "{{item}}"
+        group: "{{item}}"
+        mode: '0640'
+      loop: "{{user_home.stdout_lines}}"
 
-    - name: Copying over tmux config
+    - name: Copying over tmux config to all users
       copy:
         src: /tmp/master-tmux_conf
-        dest: /root/.tmux.conf
-        owner: root
-        group: root
+        dest: "~{{item}}/.tmux.conf"
+        owner: "{{item}}"
+        group: "{{item}}"
+        mode: '0640'
+      loop: "{{user_mode.stdout_lines}}"
 
     - name: Create /srv/smb/ directory for payload population
       file:
