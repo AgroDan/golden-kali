@@ -23,7 +23,7 @@
     - name: Installing one-off packages from package manager
       package:
         name:
-        - awk
+        - gawk
         - terminator
         - jxplorer
         - seclists
