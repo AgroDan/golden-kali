@@ -142,38 +142,39 @@
     
     - name: Getting all interactive users <<hack hack hack>>
       shell: "awk -F: '{ if (($3 >= 1000 && $3 != 65534) || $3 == 0) print $1}' /etc/passwd"
-      register: user_home
+      register: users
     
     - name: Initialize Gef for all users
-      shell: "su -c /opt/gef/scripts/gef.sh {{item}}"
-      loop: "{{user_home.stdout_lines}}"
+      script: /opt/gef/scripts/gef.sh
+      become_user: {{ item }}
+      loop: "{{ users.stdout_lines }}"
     
     - name: Copying over bashrc file to all users
       copy:
         src: /tmp/master-bashrc
-        dest: "~{{item}}/.bashrc"
-        owner: "{{item}}"
-        group: "{{item}}"
+        dest: "~{{ item }}/.bashrc"
+        owner: "{{ item }}"
+        group: "{{ item }}"
         mode: '0640'
-      loop: "{{user_home.stdout_lines}}"
+      loop: "{{ users.stdout_lines }}"
 
     - name: Copying over bash functions file for all users
       copy:
         src: /tmp/master-bash_functions
-        dest: "~{{item}}/.bash_functions"
-        owner: "{{item}}"
-        group: "{{item}}"
+        dest: "~{{ item }}/.bash_functions"
+        owner: "{{ item }}"
+        group: "{{ item }}"
         mode: '0640'
-      loop: "{{user_home.stdout_lines}}"
+      loop: "{{ users.stdout_lines }}"
 
     - name: Copying over tmux config to all users
       copy:
         src: /tmp/master-tmux_conf
-        dest: "~{{item}}/.tmux.conf"
-        owner: "{{item}}"
-        group: "{{item}}"
+        dest: "~{{ item }}/.tmux.conf"
+        owner: "{{ item }}"
+        group: "{{ item }}"
         mode: '0640'
-      loop: "{{user_mode.stdout_lines}}"
+      loop: "{{ users.stdout_lines }}"
 
     - name: Create /srv/smb/ directory for payload population
       file:
