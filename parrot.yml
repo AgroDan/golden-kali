@@ -37,10 +37,17 @@
       apt:
         update_cache: yes
         upgrade: dist
+    
+    - name: Get this neovim crap outta here (╯°□°)╯︵ ┻━┻
+      apt:
+        name: neovim
+        state: absent
 
     - name: Installing one-off packages from package manager
-      package:
+      apt:
+        update_cache: yes
         name:
+        - vim
         - gawk
         - terminator
         - jxplorer
@@ -73,7 +80,10 @@
         - libssl-dev
         - libffi-dev
         - build-essential
+        - open-vm-tools
+        - open-vm-tools-desktop
         state: latest
+        force_apt_get: yes
     
     - name: Install ShellUp!
       git:
