@@ -25,13 +25,13 @@
       apt_repository:
         repo: "{{ item }}"
         state: absent
-        loop: "{{ bad_repo }}"
+      loop: "{{ bad_repo }}"
     
     - name: Specifying a better repo
       apt_repository:
         repo: "{{ item }}"
         state: present
-        loop: "{{ good_repo }}"
+      loop: "{{ good_repo }}"
     
     - name: Ensuring all packages are up to date
       apt:
