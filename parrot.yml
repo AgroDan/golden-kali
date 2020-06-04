@@ -1,0 +1,225 @@
+---
+  - hosts: localhost
+    become: yes
+    vars:
+      docker_repo_key: "https://download.docker.com/linux/debian/gpg"
+      docker_repo: "deb [arch=amd64] https://download.docker.com/linux/debian buster stable"
+      good_repo:
+        - "deb https://mirror.clarkson.edu/parrot/ rolling main contrib non-free"
+        - "deb-src https://mirror.clarkson.edu/parrot/ rolling main contrib non-free"
+      bad_repo:
+        - "deb https://deb.parrot.sh/parrot/ rolling main contrib non-free"
+        - "deb-src https://deb.parrot.sh/parrot/ rolling main contrib non-free"
+    tasks:
+    - name: Add docker repo key
+      apt_key:
+        url: "{{ docker_repo_key }}"
+        state: present
+    
+    - name: Add docker repo
+      apt_repository:
+        repo: "{{ docker_repo }}"
+        state: present
+    
+    - name: Not using auto-repo (this may work for you, but not for me)
+      apt_repository:
+        repo: {{ item }}
+        state: absent
+        loop: {{ bad_repo }}
+    
+    - name: Specifying a better repo
+      apt_repository:
+        repo: {{ item }}
+        state: present
+        loop: {{ good_repo }}
+    
+    - name: Ensuring all packages are up to date
+      apt:
+        update_cache: yes
+        upgrade: dist
+
+    - name: Installing one-off packages from package manager
+      package:
+        name:
+        - gawk
+        - terminator
+        - jxplorer
+        - gobuster
+        - python3
+        - python3-dev
+        - python3-pip
+        - crackmapexec
+        - neo4j
+        - openjdk-13-jre
+        - openjdk-13-jdk
+        - openjdk-14-jdk
+        - rlwrap
+        - eog
+        - xclip
+        - steghide
+        - git
+        - ltrace
+        - strace
+        - gdb
+        - gdbserver
+        - docker
+        - docker-compose
+        - forensics-extra
+        - ncat
+        - jq
+        - powershell
+        - samba
+        - tmux
+        - libssl-dev
+        - libffi-dev
+        - build-essential
+        state: latest
+    
+    - name: Install ShellUp!
+      git:
+        repo: 'https://github.com/AgroDan/shellup.git'
+        dest: /opt/shellup
+    
+    - name: Install Seclists (Kali has this in the repos)
+      git:
+        repo: 'https://github.com/danielmiessler/SecLists.git'
+        dest: /opt/seclists
+    
+    - name: Install pwntools
+      pip:
+        name: git+https://github.com/Gallopsled/pwntools.git@dev
+
+    - name: Clone Invoke-Obfuscation (•_•) ( •_•)>⌐■-■ (⌐■_■)
+      git:
+        repo: 'https://github.com/danielbohannon/Invoke-Obfuscation'
+        dest: /opt/Invoke-Obfuscation
+
+    - name: Clone JumboJohn
+      git:
+        repo: 'https://github.com/magnumripper/JohnTheRipper'
+        dest: /opt/JohnTheRipper
+    
+    - name: Compiling JumboJohn, hold onto yer butts...
+      command: chdir=/opt/JohnTheRipper/src {{ item }}
+      with_items:
+      - ./configure
+      - make
+      - make install
+    
+    - name: Clone Nishang
+      git:
+        repo: 'https://github.com/samratashok/nishang'
+        dest: /opt/nishang
+    
+    - name: Clone Chisel
+      git:
+        repo: 'https://github.com/jpillora/chisel'
+        dest: /opt/chisel
+    
+    - name: Clone LinEnum
+      git:
+        repo: 'https://github.com/rebootuser/LinEnum'
+        dest: /opt/LinEnum
+    
+    - name: Clone PEASS
+      git:
+        repo: 'https://github.com/carlospolop/privilege-escalation-awesome-scripts-suite'
+        dest: /opt/privilege-escalation-awesome-scripts-suite
+    
+    - name: Clone PowerSploit
+      git:
+        repo: 'https://github.com/PowerShellMafia/PowerSploit'
+        dest: /opt/PowerSploit
+    
+    - name: Clone Impacket
+      git:
+        repo: 'https://github.com/SecureAuthCorp/impacket'
+        dest: /opt/impacket
+    
+    - name: Clone Bloodhound
+      git:
+        repo: 'https://github.com/BloodHoundAD/BloodHound'
+        dest: /opt/BloodHound
+
+    - name: Clone Gef
+      git:
+        repo: 'https://github.com/hugsy/gef.git'
+        dest: /opt/gef
+    
+    - name: Get Evil-WinRM via gem installer
+      gem:
+        name: evil-winrm
+        state: latest
+        user_install: no
+    
+    - name: Disable mouse interactivity in vim (╯°□°)╯︵ ┻━┻
+      blockinfile:
+        path: /etc/vim/vimrc
+        marker: "\" {mark} ANSIBLE MANAGED BLOCK"
+        insertafter: EOF
+        state: present
+        block: |
+          set mouse=
+          set ttymouse=
+    
+    - name: Getting all interactive users <<hack hack hack>>
+      shell: "awk -F: '{ if (($3 >= 1000 && $3 != 65534) || $3 == 0) print $1}' /etc/passwd"
+      register: users
+    
+    - name: Initialize Gef for all users
+      script: /opt/gef/scripts/gef.sh
+      become_user: "{{ item }}"
+      loop: "{{ users.stdout_lines }}"
+    
+    - name: Copying over bashrc file to all users
+      copy:
+        src: /tmp/master-bashrc
+        dest: "~{{ item }}/.bashrc"
+        owner: "{{ item }}"
+        group: "{{ item }}"
+        mode: '0640'
+      loop: "{{ users.stdout_lines }}"
+
+    - name: Copying over bash functions file for all users
+      copy:
+        src: /tmp/master-bash_functions
+        dest: "~{{ item }}/.bash_functions"
+        owner: "{{ item }}"
+        group: "{{ item }}"
+        mode: '0640'
+      loop: "{{ users.stdout_lines }}"
+
+    - name: Copying over tmux config to all users
+      copy:
+        src: /tmp/master-tmux_conf
+        dest: "~{{ item }}/.tmux.conf"
+        owner: "{{ item }}"
+        group: "{{ item }}"
+        mode: '0640'
+      loop: "{{ users.stdout_lines }}"
+
+    - name: Create /srv/smb/ directory for payload population
+      file:
+        path: /srv/smb
+        state: directory
+        mode: '0755'
+        
+    - name: Creating IWR share in samba config
+      blockinfile:
+        path: /etc/samba/smb.conf
+        insertafter: EOF
+        state: present
+        block: |
+          [iwr]
+            comment = Invoke-WebReq'd em? Damn near killed em!
+            path = /srv/smb
+            guest ok = yes
+            browseable = yes
+            create mask = 0600
+            directory mask = 0755
+
+    - name: Ensure that samba doesn't start on boot
+      systemd:
+        name: smbd
+        enabled: no
+        state: stopped
