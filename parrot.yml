@@ -156,6 +156,11 @@
         repo: 'https://github.com/hugsy/gef.git'
         dest: /opt/gef
     
+    - name: Clone Static Binaries
+      git:
+        repo: 'https://github.com/andrew-d/static-binaries'
+        dest: /opt/static-binaries
+    
     - name: Clone Ysoserial
       git:
         repo: 'https://github.com/frohoff/ysoserial'
