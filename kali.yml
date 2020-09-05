@@ -124,6 +124,17 @@
         repo: 'https://github.com/hugsy/gef.git'
         dest: /opt/gef
     
+    - name: Clone Ysoserial
+    git:
+      repo: 'https://github.com/frohoff/ysoserial'
+      dest: /opt/ysoserial
+    
+    - name: Downloading Ysoserial JAR file
+    get_url:
+      url: https://jitpack.io/com/github/frohoff/ysoserial/master-SNAPSHOT/ysoserial-master-SNAPSHOT.jar
+      dest: /opt/ysoserial/ysoserial-master-SNAPSHOT.jar
+      mode: '0644'
+    
     - name: Get Evil-WinRM via gem installer
       gem:
         name: evil-winrm
