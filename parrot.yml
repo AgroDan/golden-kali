@@ -82,6 +82,7 @@
         - build-essential
         - open-vm-tools
         - open-vm-tools-desktop
+        - remmina
         state: latest
         force_apt_get: yes
     
