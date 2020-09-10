@@ -56,6 +56,7 @@
         - libssl-dev
         - libffi-dev
         - build-essential
+        - remmina
         state: latest
     
     - name: Install ShellUp!
