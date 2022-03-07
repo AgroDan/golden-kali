@@ -56,12 +56,14 @@
         - libffi-dev
         - build-essential
         - remmina
+        - bloodhound
+        - ghidra
+        - python3-impacket
+        - nishang
+        - chisel
         state: latest
     
-    - name: Install ShellUp!
-      git:
-        repo: 'https://github.com/AgroDan/shellup.git'
-        dest: /opt/shellup
+    
     
     - name: Install pwntools
       pip:
@@ -84,15 +86,9 @@
       - make
       - make install
     
-    - name: Clone Nishang
-      git:
-        repo: 'https://github.com/samratashok/nishang'
-        dest: /opt/nishang
+   
     
-    - name: Clone Chisel
-      git:
-        repo: 'https://github.com/jpillora/chisel'
-        dest: /opt/chisel
+    
     
     - name: Clone LinEnum
       git:
@@ -114,10 +110,7 @@
         repo: 'https://github.com/SecureAuthCorp/impacket'
         dest: /opt/impacket
     
-    - name: Clone Bloodhound
-      git:
-        repo: 'https://github.com/BloodHoundAD/BloodHound'
-        dest: /opt/BloodHound
+    
 
     - name: Clone Gef
       git:
@@ -165,23 +158,7 @@
       become_user: "{{ item }}"
       loop: "{{ users.stdout_lines }}"
     
-    - name: Copying over bashrc file to all users
-      copy:
-        src: /tmp/master-bashrc
-        dest: "~{{ item }}/.bashrc"
-        owner: "{{ item }}"
-        group: "{{ item }}"
-        mode: '0640'
-      loop: "{{ users.stdout_lines }}"
 
-    - name: Copying over bash functions file for all users
-      copy:
-        src: /tmp/master-bash_functions
-        dest: "~{{ item }}/.bash_functions"
-        owner: "{{ item }}"
-        group: "{{ item }}"
-        mode: '0640'
-      loop: "{{ users.stdout_lines }}"
 
     - name: Copying over tmux config to all users
       copy:
