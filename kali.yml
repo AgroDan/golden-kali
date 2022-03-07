@@ -61,8 +61,9 @@
         - python3-impacket
         - nishang
         - chisel
-        - tor torbrowser-launcher
-        - 
+        - tor 
+        - torbrowser-launcher
+        
         state: latest
     
     
