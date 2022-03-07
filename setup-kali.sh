@@ -30,7 +30,7 @@ echo "***********************************"
 echo "*       Pulling .tmux.conf        *"
 echo "***********************************"
 
-curl -sL "http://raw.github.com/AgroDan/FreshInstall/master/master-tmux_conf?nocache=$RANDO" -o /tmp/master-tmux_conf
+curl -sL "https://raw.githubusercontent.com/Masklyne/FreshInstall/master/master-tmux_conf?nocache=$RANDO" -o /tmp/master-tmux_conf
 
 echo "***********************************"
 echo "*      Running Kali playbook      *"
@@ -39,6 +39,13 @@ echo "***********************************"
 curl -sL "https://raw.githubusercontent.com/Masklyne/FreshInstall/master/kali.yml?nocache=$RANDO" -o /tmp/kali.yml
 
 ansible-playbook /tmp/kali.yml
+
+echo "***********************************"
+echo "*  Install NVIDIA GPU Drivers  *"
+echo "***********************************"
+sudo apt update
+sudo apt install -y nvidia-driver nvidia-cuda-toolkit
+
 
 echo "***********************************"
 echo "*          Cleaning up            *"
