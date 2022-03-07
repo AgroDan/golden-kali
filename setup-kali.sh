@@ -36,7 +36,7 @@ echo "***********************************"
 echo "*      Running Kali playbook      *"
 echo "***********************************"
 
-curl -sL "http://raw.github.com/AgroDan/FreshInstall/master/kali.yml?nocache=$RANDO" -o /tmp/kali.yml
+curl -sL "https://raw.githubusercontent.com/Masklyne/FreshInstall/master/kali.yml?nocache=$RANDO" -o /tmp/kali.yml
 
 ansible-playbook /tmp/kali.yml
 
