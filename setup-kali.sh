@@ -13,10 +13,8 @@ echo "***********************************"
 echo "*        Installing pip           *"
 echo "***********************************"
 
-curl -s https://bootstrap.pypa.io/get-pip.py -o /tmp/get-pip.py
-python3 /tmp/get-pip.py --user --no-warn-script-location
+sudo apt install python3-pip -y 
 
-export PATH=$PATH:/root/.local/bin
 
 echo "***********************************"
 echo "*       Installing ansible        *"
