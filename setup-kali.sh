@@ -41,10 +41,30 @@ curl -sL "https://raw.githubusercontent.com/Masklyne/FreshInstall/master/kali.ym
 ansible-playbook /tmp/kali.yml
 
 echo "***********************************"
-echo "*  Install NVIDIA GPU Drivers  *"
+echo "*  Install NVIDIA GPU Drivers     *"
 echo "***********************************"
 sudo apt update
 sudo apt install -y nvidia-driver nvidia-cuda-toolkit
+
+echo "***********************************"
+echo "*  set up tlp to help with battery  *"
+echo "***********************************"
+sudo apt install -y tlp
+sudo systemctl enable tlp
+sudo systemctl start tlp
+sudo tlp start
+
+echo "***********************************"
+echo "*  Set up discord 		*"
+echo "***********************************"
+sudo apt install -y snapd
+sudo systemctl enable snapd.apparmor.service
+sudo systemctl enable --now snapd apparmor
+sudo snap install discord
+snap connect discord:system-observe
+echo "****************************************************************"
+echo "*  You will need to run sudo /snap/bin/discord after reboot    *"
+echo "****************************************************************"
 
 
 echo "***********************************"
@@ -57,4 +77,5 @@ echo "***********************************"
 echo "*             Done!               *"
 echo "***********************************"
 
-echo "You should be set up. Check above for any errors."
+echo "You should be set up. rebooting for the Nvida drivers ."
+sudo reboot -f
