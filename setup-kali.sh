@@ -24,17 +24,7 @@ echo "***********************************"
 
 pip install ansible
 
-echo "***********************************"
-echo "*      Pulling master bashrc      *"
-echo "***********************************"
 
-curl -sL "http://raw.github.com/AgroDan/FreshInstall/master/master-bashrc?nocache=$RANDO" -o /tmp/master-bashrc
-
-echo "***********************************"
-echo "*     Pulling bash_functions      *"
-echo "***********************************"
-
-curl -sL "http://raw.github.com/AgroDan/FreshInstall/master/master-bash_functions?nocache=$RANDO" -o /tmp/master-bash_functions
 
 echo "***********************************"
 echo "*       Pulling .tmux.conf        *"
