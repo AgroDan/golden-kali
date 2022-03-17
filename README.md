@@ -8,7 +8,7 @@ If you just started up a new instance of **Kali**, to get it to a "proper workin
 
 `curl -sL https://raw.github.com/AgroDan/FreshInstall/master/setup-kali.sh | sudo bash`
 
-I also dabble a bit in **Parrot OS**. I've since created a similar bootstrap for it as well:
+I also dabble a bit in **Parrot OS**. I've since created a similar bootstrap for it as well. **NOTE**: I have not used Parrot in a while so this may not work anymore. Feel free to try it out, but probably better to contribute yourself!:
 
 `curl -sL https://raw.github.com/AgroDan/FreshInstall/master/setup-parrot.sh | sudo bash`
 

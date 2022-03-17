@@ -3,25 +3,33 @@
     become: yes
     vars:
       docker_repo_key: "https://download.docker.com/linux/debian/gpg"
-      docker_repo: "deb [arch=amd64] https://download.docker.com/linux/debian buster stable"
+      docker_repo: "deb [arch=amd64] https://download.docker.com/linux/debian bullseye stable"
+      sublime_repo_key: "https://download.sublimetext.com/sublimehq-pub.gpg"
+      sublime_repo: "deb https://download.sublimetext.com/ apt/stable/"
     tasks:
-    - name: Add docker repo key
-      apt_key:
-        url: "{{ docker_repo_key }}"
-        state: present
+    - name: Add Docker repo key
+      ansible.builtin.shell: curl -fsSL {{ docker_repo_key }} | gpg --dearmor -o /etc/apt/trusted.gpg.d/docker-ce-keyring.gpg
     
-    - name: Add docker repo
-      apt_repository:
+    - name: Add Docker repo
+      ansible.builtin.apt_repository:
         repo: "{{ docker_repo }}"
+        state: present
+
+    - name: Add Sublime Text repo key
+      ansible.builtin.shell: curl -fsSL {{ sublime_repo_key }} | gpg --dearmor -o /etc/apt/trusted.gpg.d/sublime-text-keyring.gpg
+
+    - name: Add Sublime Text repo
+      ansible.builtin.apt_repository:
+        repo: "{{ sublime_repo }}"
         state: present
     
     - name: Ensuring all packages are up to date
-      apt:
+      ansible.builtin.apt:
         update_cache: yes
         upgrade: dist
 
     - name: Installing one-off packages from package manager
-      package:
+      ansible.builtin.package:
         name:
         - gawk
         - terminator
@@ -56,98 +64,99 @@
         - libffi-dev
         - build-essential
         - remmina
+        - sublime-text
         state: latest
     
     - name: Install ShellUp!
-      git:
+      ansible.builtin.git:
         repo: 'https://github.com/AgroDan/shellup.git'
         dest: /opt/shellup
     
     - name: Install pwntools
-      pip:
+      ansible.builtin.pip:
         name: git+https://github.com/Gallopsled/pwntools.git@dev
 
     - name: Clone Invoke-Obfuscation (•_•) ( •_•)>⌐■-■ (⌐■_■)
-      git:
+      ansible.builtin.git:
         repo: 'https://github.com/danielbohannon/Invoke-Obfuscation'
         dest: /opt/Invoke-Obfuscation
 
     - name: Clone JumboJohn
-      git:
+      ansible.builtin.git:
         repo: 'https://github.com/magnumripper/JohnTheRipper'
         dest: /opt/JohnTheRipper
     
     - name: Compiling JumboJohn, hold onto yer butts...
-      command: chdir=/opt/JohnTheRipper/src {{ item }}
+      ansible.builtin.command: chdir=/opt/JohnTheRipper/src {{ item }}
       with_items:
       - ./configure
       - make
       - make install
     
     - name: Clone Nishang
-      git:
+      ansible.builtin.git:
         repo: 'https://github.com/samratashok/nishang'
         dest: /opt/nishang
     
     - name: Clone Chisel
-      git:
+      ansible.builtin.git:
         repo: 'https://github.com/jpillora/chisel'
         dest: /opt/chisel
     
     - name: Clone LinEnum
-      git:
+      ansible.builtin.git:
         repo: 'https://github.com/rebootuser/LinEnum'
         dest: /opt/LinEnum
     
     - name: Clone PEASS
-      git:
+      ansible.builtin.git:
         repo: 'https://github.com/carlospolop/privilege-escalation-awesome-scripts-suite'
         dest: /opt/privilege-escalation-awesome-scripts-suite
     
     - name: Clone PowerSploit
-      git:
+      ansible.builtin.git:
         repo: 'https://github.com/PowerShellMafia/PowerSploit'
         dest: /opt/PowerSploit
     
     - name: Clone Impacket
-      git:
+      ansible.builtin.git:
         repo: 'https://github.com/SecureAuthCorp/impacket'
         dest: /opt/impacket
     
     - name: Clone Bloodhound
-      git:
+      ansible.builtin.git:
         repo: 'https://github.com/BloodHoundAD/BloodHound'
         dest: /opt/BloodHound
 
     - name: Clone Gef
-      git:
+      ansible.builtin.git:
         repo: 'https://github.com/hugsy/gef.git'
         dest: /opt/gef
     
     - name: Clone Static Binaries
-      git:
+      ansible.builtin.git:
         repo: 'https://github.com/andrew-d/static-binaries'
         dest: /opt/static-binaries
     
     - name: Clone Ysoserial
-      git:
+      ansible.builtin.git:
         repo: 'https://github.com/frohoff/ysoserial'
         dest: /opt/ysoserial
     
     - name: Downloading Ysoserial JAR file
-      get_url:
+      ansible.builtin.get_url:
         url: https://jitpack.io/com/github/frohoff/ysoserial/master-SNAPSHOT/ysoserial-master-SNAPSHOT.jar
         dest: /opt/ysoserial/ysoserial-master-SNAPSHOT.jar
         mode: '0644'
     
     - name: Get Evil-WinRM via gem installer
-      gem:
+      ansible.builtin.gem:
         name: evil-winrm
         state: latest
         user_install: no
     
     - name: Disable mouse interactivity in vim (╯°□°)╯︵ ┻━┻
-      blockinfile:
+      ansible.builtin.blockinfile:
         path: /etc/vim/vimrc
         marker: "\" {mark} ANSIBLE MANAGED BLOCK"
         insertafter: EOF
@@ -157,16 +166,16 @@
           set ttymouse=
     
     - name: Getting all interactive users <<hack hack hack>>
-      shell: "awk -F: '{ if (($3 >= 1000 && $3 != 65534) || $3 == 0) print $1}' /etc/passwd"
+      ansible.builtin.shell: "awk -F: '{ if (($3 >= 1000 && $3 != 65534) || $3 == 0) print $1}' /etc/passwd"
       register: users
     
     - name: Initialize Gef for all users
-      script: /opt/gef/scripts/gef.sh
+      ansible.builtin.script: /opt/gef/scripts/gef.sh
       become_user: "{{ item }}"
       loop: "{{ users.stdout_lines }}"
     
     - name: Copying over bashrc file to all users
-      copy:
+      ansible.builtin.copy:
         src: /tmp/master-bashrc
         dest: "~{{ item }}/.bashrc"
         owner: "{{ item }}"
@@ -175,7 +184,7 @@
       loop: "{{ users.stdout_lines }}"
 
     - name: Copying over bash functions file for all users
-      copy:
+      ansible.builtin.copy:
         src: /tmp/master-bash_functions
         dest: "~{{ item }}/.bash_functions"
         owner: "{{ item }}"
@@ -184,7 +193,7 @@
       loop: "{{ users.stdout_lines }}"
 
     - name: Copying over tmux config to all users
-      copy:
+      ansible.builtin.copy:
         src: /tmp/master-tmux_conf
         dest: "~{{ item }}/.tmux.conf"
         owner: "{{ item }}"
@@ -193,13 +202,13 @@
       loop: "{{ users.stdout_lines }}"
 
     - name: Create /srv/smb/ directory for payload population
-      file:
+      ansible.builtin.file:
         path: /srv/smb
         state: directory
         mode: '0755'
         
     - name: Creating IWR share in samba config
-      blockinfile:
+      ansible.builtin.blockinfile:
         path: /etc/samba/smb.conf
         insertafter: EOF
         state: present
@@ -213,7 +222,7 @@
             directory mask = 0755
 
     - name: Ensure that samba doesn't start on boot
-      systemd:
+      ansible.builtin.systemd:
         name: smbd
         enabled: no
         state: stopped
