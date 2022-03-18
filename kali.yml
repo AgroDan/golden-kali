@@ -65,6 +65,7 @@
         - build-essential
         - remmina
         - sublime-text
+        - golang-go
         state: latest
     
     - name: Install ShellUp!
@@ -142,6 +143,14 @@
       ansible.builtin.git:
         repo: 'https://github.com/frohoff/ysoserial'
         dest: /opt/ysoserial
+
+    - name: Clone Kerbrute
+      ansible.builtin.git:
+        repo: 'https://github.com/ropnop/kerbrute.git'
+        dest: /opt/kerbrute
+
+    - name: Building Kerbrute...
+      ansible.builtin.command: chdir=/opt/kerbrute make linux
     
     - name: Downloading Ysoserial JAR file
       ansible.builtin.get_url:
