@@ -25,6 +25,8 @@
         name:
         - gawk
         - terminator
+        - bytecode-viewer
+        - code-oss
         - jxplorer
         - seclists
         - gobuster
