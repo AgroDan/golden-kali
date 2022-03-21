@@ -66,6 +66,10 @@
         - remmina
         - sublime-text
         - golang-go
+        - ghidra
+        - bytecode-viewer
+        - ntpdate
+        - bloodhound
         state: latest
     
     - name: Install ShellUp!
@@ -123,11 +127,19 @@
       ansible.builtin.git:
         repo: 'https://github.com/SecureAuthCorp/impacket'
         dest: /opt/impacket
+
+    - name: Installing Impacket
+      ansible.builtin.shell: "python3 /opt/impacket/setup.py build && python3 /opt/impacket/setup.py install"
     
-    - name: Clone Bloodhound
+    - name: Clone Bloodhound.py
       ansible.builtin.git:
-        repo: 'https://github.com/BloodHoundAD/BloodHound'
-        dest: /opt/BloodHound
+        repo: 'https://github.com/fox-it/BloodHound.py.git'
+        dest: /opt/BloodHound.py
+
+    - name: Clone PyFuscation
+      ansible.builtin.git:
+        repo: 'https://github.com/CBHue/PyFuscation.git'
+        dest: /opt/PyFuscation
 
     - name: Clone Gef
       ansible.builtin.git:
