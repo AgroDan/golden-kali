@@ -49,7 +49,7 @@ echo "***********************************"
 curl -sL "http://raw.github.com/AgroDan/FreshInstall/master/master-tmux_conf?nocache=$RANDO" -o /tmp/master-tmux_conf
 
 echo "***********************************"
-echo "*      Running Kali playbook      *"
+echo "*    Running ParrotOS playbook    *"
 echo "***********************************"
 
 curl -sL "http://raw.github.com/AgroDan/FreshInstall/master/parrot.yml?nocache=$RANDO" -o /tmp/parrot.yml
