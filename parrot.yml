@@ -24,7 +24,7 @@
         state: present
 
     - name: Add Sublime Text Repo Key
-      ansible.builtin.apt-key:
+      ansible.builtin.apt_key:
         url: "{{ sublime_repo_key }}"
         state: present
 
