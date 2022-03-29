@@ -25,6 +25,12 @@ echo "***********************************"
 pip install ansible
 
 echo "***********************************"
+echo "*  Installing Ansible Collection  *"
+echo "***********************************"
+
+ansible-galaxy collection install community.general
+
+echo "***********************************"
 echo "*      Pulling master bashrc      *"
 echo "***********************************"
 
