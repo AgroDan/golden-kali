@@ -70,6 +70,7 @@
         - bytecode-viewer
         - ntpdate
         - bloodhound
+        - zaproxy
         state: latest
     
     - name: Install ShellUp!
