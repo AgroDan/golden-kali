@@ -131,6 +131,8 @@
 
     - name: Installing Impacket
       ansible.builtin.shell: "python3 /opt/impacket/setup.py build && python3 /opt/impacket/setup.py install"
+      args:
+        chdir: /opt/impacket
     
     - name: Clone Bloodhound.py
       ansible.builtin.git:
