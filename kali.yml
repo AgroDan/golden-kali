@@ -8,7 +8,7 @@
       sublime_repo: "deb https://download.sublimetext.com/ apt/stable/"
     tasks:
     - name: Add Docker repo key
-      ansible.builtin.shell: curl -fsSL {{ docker_repo_key }} | gpg --dearmor --batch -o /etc/apt/trusted.gpg.d/docker-ce-keyring.gpg
+      ansible.builtin.shell: curl -fsSL {{ docker_repo_key }} | gpg --dearmor --batch --yes -o /etc/apt/trusted.gpg.d/docker-ce-keyring.gpg
     
     - name: Add Docker repo
       ansible.builtin.apt_repository:
@@ -16,7 +16,7 @@
         state: present
 
     - name: Add Sublime Text repo key
-      ansible.builtin.shell: curl -fsSL {{ sublime_repo_key }} | gpg --dearmor --batch -o /etc/apt/trusted.gpg.d/sublime-text-keyring.gpg
+      ansible.builtin.shell: curl -fsSL {{ sublime_repo_key }} | gpg --dearmor --batch --yes -o /etc/apt/trusted.gpg.d/sublime-text-keyring.gpg
 
     - name: Add Sublime Text repo
       ansible.builtin.apt_repository:
