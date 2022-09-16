@@ -171,7 +171,7 @@
     
     - name: Downloading Ysoserial JAR file
       ansible.builtin.get_url:
-        url: {{ ysoserial_jar }}
+        url: "{{ ysoserial_jar }}"
         dest: /opt/ysoserial/ysoserial-all.jar
         mode: '0644'
     
@@ -183,7 +183,7 @@
         user_install: no
 
     - name: Install Kitty Terminal Emulator 🐱
-      ansible.builtin.command: /usr/bin/curl -sL {{ kitty_installer }} | sh /dev/sdtin dest=/opt launch=n
+      ansible.builtin.command: "/usr/bin/curl -sL {{ kitty_installer }} | sh /dev/sdtin dest=/opt launch=n"
 
     - name: Create Desktop Icon for Kitty 🐱
       ansible.builtin.copy:

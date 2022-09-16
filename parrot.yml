@@ -182,7 +182,7 @@
     
     - name: Downloading Ysoserial JAR file
       ansible.builtin.get_url:
-        url: {{ ysoserial_jar }}
+        url: "{{ ysoserial_jar }}"
         dest: /opt/ysoserial/ysoserial-all.jar
         mode: '0644'
     
