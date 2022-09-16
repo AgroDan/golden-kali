@@ -179,6 +179,21 @@
         norc: yes
         state: latest
         user_install: no
+
+    - name: Install Kitty Terminal Emulator 🐱
+      ansible.builtin.command: /usr/bin/curl -sL https://sw.kovidgoyal.net/kitty/installer.sh | sh /dev/sdtin dest=/opt launch=n
+
+    - name: Create Desktop Icon for Kitty 🐱
+      ansible.builtin.copy:
+        dest: "/usr/share/applications"
+        content: |
+          [Desktop Entry]
+          Version=0.26.2
+          Type=Application
+          Name=Kitty Terminal Emulator
+          Exec=/opt/kitty.app/bin/kitty
+          Icon=/opt/kitty.app/share/icons/hicolor/256x256/apps/kitty.png
+          Categories=Utility
     
     - name: Disable mouse interactivity in vim (╯°□°)╯︵ ┻━┻
       ansible.builtin.blockinfile:
