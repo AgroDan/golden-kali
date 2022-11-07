@@ -195,7 +195,8 @@
         user_install: no
 
     - name: Install Kitty Terminal Emulator 🐱
-      ansible.builtin.command: "/usr/bin/curl -sL {{ kitty_installer }} | sh /dev/stdin dest=/opt launch=n"
+      ansible.builtin.shell:
+        cmd: "/usr/bin/curl -sL {{ kitty_installer }} | sh /dev/stdin dest=/opt launch=n"
 
     - name: Create Desktop Icon for Kitty 🐱
       ansible.builtin.copy:
