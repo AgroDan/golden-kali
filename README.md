@@ -14,4 +14,4 @@ The previous command used to be a `curl` instruction piped to `bash`. I changed 
 
 I made some significant changes to this repository from the previous iteration. First, the name has been changed to `golden-kali`. Second, I have removed support for ParrotOS. It's generally something I don't use all that often to support it, so this is what you have. I'm sure you can apply all of the ideas here for a ParrotOS build as well if that's your thing.
 
-Many of the changes here came as a result of this repository being included as a necessary install step process for the Red Team at (https://cyberforce.energy.gov/cyberforce-competition/)[DoE's Cyberforce Competition] in 2022. The code was modified heavily for the event's exhaustive playbook. I took what I had learned there and simply applied it here.
+Many of the changes here came as a result of this repository being included as a necessary install step process for the Red Team at [DoE's Cyberforce Competition](https://cyberforce.energy.gov/cyberforce-competition/) in 2022. The code was modified heavily for the event's exhaustive playbook. I took what I had learned there and simply applied it here.
