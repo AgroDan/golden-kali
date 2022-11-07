@@ -248,7 +248,7 @@
       loop: "{{ users.stdout_lines }}"
 
     - name: Enabling zsh functions
-      loop: "{{ users.stdout_lins }}"
+      loop: "{{ users.stdout_lines }}"
       ansible.builtin.blockinfile:
         path: "~{{ item }}/.zshrc"
         state: present
