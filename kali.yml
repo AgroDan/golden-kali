@@ -218,7 +218,7 @@
       loop: "{{ users.stdout_lines }}"
       ansible.builtin.file:
         dest: "~{{ item }}/.config/kitty/"
-        state: touch
+        state: directory
         recurse: yes
         owner: "{{ item }}"
         group: "{{ item }}"
