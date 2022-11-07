@@ -194,6 +194,10 @@
         state: latest
         user_install: no
 
+    - name: Getting all interactive users
+      ansible.builtin.shell: "awk -F: '{ if (($3 >= 1000 && $3 != 65534) || $3 == 0) print $1}' /etc/passwd"
+      register: users
+
     - name: Install Kitty Terminal Emulator 🐱
       ansible.builtin.shell:
         cmd: "/usr/bin/curl -sL {{ kitty_installer }} | sh /dev/stdin dest=/opt launch=n"
@@ -209,6 +213,34 @@
           Exec=/opt/kitty.app/bin/kitty
           Icon=/opt/kitty.app/share/icons/hicolor/256x256/apps/kitty.png
           Categories=Utility
+
+    - name: Prepare kitty.conf files for all interactive users 🐱
+      loop: "{{ users.stdout_lines }}"
+      ansible.builtin.file:
+        dest: "~{{ item }}/.config/kitty/kitty.conf"
+        state: touch
+        recurse: yes
+        owner: "{{ item }}"
+        group: "{{ item }}"
+
+    - name: Prepare personalized configs for Kitty 🐱
+      loop: "{{ users.stdout_lines }}"
+      ansible.builtin.blockinfile:
+        path: "~{{ item }}/.config/kitty/kitty.conf"
+        insertafter: EOF
+        state: present
+        block: |
+          # New windows open in current directory
+          map ctrl+shift+enter launch --cwd=current
+
+          # New tabs open in current directory
+          map ctrl+t new_tab --cwd=current
+
+          # The coveted "zoom" function
+          map ctrl+shift+z toggle_layout stack
+
+          # Disable mouse-click a link to open in a browser
+          mouse_map left click ungrabbed no_op
     
     - name: Disable mouse interactivity in vim (╯°□°)╯︵ ┻━┻
       ansible.builtin.blockinfile:
@@ -220,9 +252,6 @@
           set mouse=
           set ttymouse=
     
-    - name: Getting all interactive users
-      ansible.builtin.shell: "awk -F: '{ if (($3 >= 1000 && $3 != 65534) || $3 == 0) print $1}' /etc/passwd"
-      register: users
 
     - name: Add sudo-NOPASSWD to users
       loop: "{{ users.stdout_lines }}"
