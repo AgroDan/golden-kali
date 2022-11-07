@@ -217,11 +217,12 @@
     - name: Prepare kitty.conf files for all interactive users 🐱
       loop: "{{ users.stdout_lines }}"
       ansible.builtin.file:
-        dest: "~{{ item }}/.config/kitty/kitty.conf"
+        dest: "~{{ item }}/.config/kitty/"
         state: touch
         recurse: yes
         owner: "{{ item }}"
         group: "{{ item }}"
+        mode: 0755
 
     - name: Prepare personalized configs for Kitty 🐱
       loop: "{{ users.stdout_lines }}"
