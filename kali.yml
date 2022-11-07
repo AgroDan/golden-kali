@@ -200,7 +200,7 @@
 
     - name: Create Desktop Icon for Kitty 🐱
       ansible.builtin.copy:
-        dest: "/usr/share/applications"
+        dest: "/usr/share/applications/kitty.desktop"
         content: |
           [Desktop Entry]
           Version=0.26.2
