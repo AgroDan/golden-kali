@@ -9,8 +9,9 @@
       ysoserial_jar: "https://github.com/frohoff/ysoserial/releases/latest/download/ysoserial-all.jar"
       kitty_installer: "https://sw.kovidgoyal.net/kitty/installer.sh"
     tasks:
-    - ansible.builtin.fail:
-        msg: "This playbook must be run properly! Execute sudo bash setup.sh"
+    - name: Confirming playbook was run properly
+      ansible.builtin.fail:
+        msg: "Do not call this playbook directly! Execute sudo bash setup.sh"
       when: tmux is not defined or zsh_func is not defined
 
     - name: Add Docker repo key
@@ -194,7 +195,7 @@
         user_install: no
 
     - name: Install Kitty Terminal Emulator 🐱
-      ansible.builtin.command: "/usr/bin/curl -sL {{ kitty_installer }} | sh /dev/sdtin dest=/opt launch=n"
+      ansible.builtin.command: "/usr/bin/curl -sL {{ kitty_installer }} | sh /dev/stdin dest=/opt launch=n"
 
     - name: Create Desktop Icon for Kitty 🐱
       ansible.builtin.copy:

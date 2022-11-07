@@ -37,4 +37,4 @@ echo "***********************************"
 echo "*             Done!               *"
 echo "***********************************"
 
-echo "You should be set up. Check above for any errors."
+echo "You should reboot your system now."

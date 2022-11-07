@@ -6,7 +6,7 @@ And if you don't like my modifications, I encourage you to fork this repo and ma
 ## Usage
 If you just started up a new instance of **Kali**, to get it to a "proper working setup" that I've come to like, simply run the following command from a terminal:
 
-`git clone https://github.com/AgroDan/Golden-Kali.git && sudo bash ./Golden-Kali/setup.sh`
+`git clone https://github.com/AgroDan/golden-kali.git && sudo bash ./golden-kali/setup.sh`
 
 The previous command used to be a `curl` instruction piped to `bash`. I changed that to a `git clone` instead to change up the way files would be included. It was cleaner and I was able to mess around with. I may be installing malicious software, but I wish no mal-intent to you. Peace, love, and hack all the things.
 
