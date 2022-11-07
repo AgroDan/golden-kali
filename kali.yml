@@ -229,6 +229,7 @@
       ansible.builtin.blockinfile:
         path: "~{{ item }}/.config/kitty/kitty.conf"
         insertafter: EOF
+        create: yes
         state: present
         block: |
           # New windows open in current directory
