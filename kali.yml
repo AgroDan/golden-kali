@@ -113,6 +113,14 @@
       - make
       - make install
     
+    - name: Install trufflehog
+      ansible.builtin.pip:
+        name: trufflehog
+
+    - name: Install LDAPDomainDump
+      ansible.builtin.pip:
+        name: ldapdomaindump
+
     - name: Clone Nishang
       ansible.builtin.git:
         repo: 'https://github.com/samratashok/nishang'

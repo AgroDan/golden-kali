@@ -3,14 +3,27 @@
 # Exit immediately on failure
 set -eu
 
-if [[ $EUID -ne 0 ]]; then
-	echo "This script must be run as sudo or root."
+# Are we running in bash?
+# Single bracket to be posix compliant in case we run in sh or something
+if [ ! -z ${BASH} ]; then
+	echo "This script must be run from the Bash shell!"
 	exit 1
 fi
 
-PATH_TO_SCRIPT=$(dirname $0)
+# Are we root?
+if [[ $EUID -ne 0 ]]; then
+	echo "This script must be run as sudo or root."
+	exit 2
+fi
+
+PATH_TO_SCRIPT=$(dirname $(readlink -f $0))
 ZSH_FUNC_FILE="zsh_functions.zsh"
 TMUX_FILE="tmux_conf"
+
+if [[ ! -e ${PATH_TO_SCRIPT}/${ZSH_FUNC_FILE} ]] && [[ ! -e ${PATH_TO_SCRIPT}/${TMUX_FILE} ]]; then
+	echo "Cannot find supporting files! Please clone repository and try again!"
+	exit 3
+fi
 
 echo "***********************************"
 echo "*        Installing pip           *"
