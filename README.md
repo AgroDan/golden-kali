@@ -20,7 +20,7 @@ Many of the changes here came as a result of this repository being included as a
 
 ## Caveat Emptor
 
-Through exhaustive testing and re-testing, we have determined that this will install approximately XX Gigabytes of data onto your Kali machine. It is advised that you have at least YY Gigabytes free before running this installer!
+Through exhaustive testing and re-testing, we have determined that this will install approximately 13 Gigabytes of data onto your Kali machine. It is advised that you have at least 15 Gigabytes free before running this installer!
 
 Despite all of our efforts, no one has been able to get this script to work on Apple's M1 architecture. This is for AMD64 only. Sorry!
 

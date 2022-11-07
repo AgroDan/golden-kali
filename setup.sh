@@ -5,7 +5,7 @@ set -eu
 
 # Are we running in bash?
 # Single bracket to be posix compliant in case we run in sh or something
-if [ ! -z ${BASH} ]; then
+if [ -z ${BASH} ]; then
 	echo "This script must be run from the Bash shell!"
 	exit 1
 fi
