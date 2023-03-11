@@ -15,3 +15,12 @@ scan() {
 	sudo nmap -sS -p- -oN $SCANDIR/allports -v0 $TARGET &disown
 	sudo nmap -sU -oN $SCANDIR/udpports -v0 $TARGET &disown
 }
+
+# Get latest version of linpeas and download to current directory
+alias getlinpeas='curl -L https://github.com/carlospolop/PEASS-ng/releases/latest/download/linpeas.sh > linpeas.sh'
+
+# I use this a ton
+alias webserver='python -m http.server'
+
+# hey why not, change this number to your preferred revshell port.
+alias revshell='ncat -lvnp 9090'
