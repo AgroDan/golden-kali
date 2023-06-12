@@ -1,0 +1,10 @@
+---
+  - name: Golden Kali
+    hosts: localhost
+    become: true
+    gather_facts: false
+
+    roles:
+      - package-mgmt
+      - individual-apps
+      - custom-config

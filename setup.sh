@@ -17,13 +17,6 @@ if [[ $EUID -ne 0 ]]; then
 fi
 
 PATH_TO_SCRIPT=$(dirname $(readlink -f $0))
-ZSH_FUNC_FILE="zsh_functions.zsh"
-TMUX_FILE="tmux_conf"
-
-if [[ ! -e ${PATH_TO_SCRIPT}/${ZSH_FUNC_FILE} ]] && [[ ! -e ${PATH_TO_SCRIPT}/${TMUX_FILE} ]]; then
-	echo "Cannot find supporting files! Please clone repository and try again!"
-	exit 3
-fi
 
 echo "***********************************"
 echo "*        Installing pip           *"
@@ -44,7 +37,7 @@ echo "***********************************"
 echo "*      Running Kali playbook      *"
 echo "***********************************"
 
-ansible-playbook ${PATH_TO_SCRIPT}/kali.yml --extra-vars "tmux=${PATH_TO_SCRIPT}/${TMUX_FILE} zsh_func=${PATH_TO_SCRIPT}/${ZSH_FUNC_FILE}"
+ansible-playbook ${PATH_TO_SCRIPT}/main.yml
 
 echo "***********************************"
 echo "*             Done!               *"

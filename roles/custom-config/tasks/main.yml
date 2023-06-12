@@ -1,0 +1,132 @@
+---
+# tasks file for custom-config
+- name: Getting all interactive users
+  #ansible.builtin.shell "awk -F: '{ if (($3 >= 1000 && $3 != 65534) || $3 == 0) print $1)' /etc/passwd"
+  ansible.builtin.shell: "grep -E '(ba|da|k|c|z|tc|b|a|sc|sh)$' /etc/passwd"
+  register: users
+
+- name: Install Kitty Terminal Emulator 🐱
+  ansible.builtin.shell:
+    cmd: "/usr/bin/curl -sL {{ kitty_installer }} | sh /dev/stdin dest=/opt launch=n"
+
+- name: Create Desktop Icon for Kitty 🐱
+  ansible.builtin.copy:
+    dest: "/usr/share/applications/kitty.desktop"
+    content: |
+      [Desktop Entry]
+      Version=0.26.2
+      Type=Application
+      Name=Kitty Terminal Emulator
+      Exec=/opt/kitty.app/bin/kitty
+      Icon=/opt/kitty.app/share/icons/hicolor/256x256/apps/kitty.png
+      Categories=Utility
+
+- name: Prepare kitty.conf files for all interactive users 🐱
+  loop: "{{ users.stdout_lines }}"
+  ansible.builtin.file:
+    dest: "~{{ item }}/.config/kitty/"
+    state: directory
+    recurse: yes
+    owner: "{{ item }}"
+    group: "{{ item }}"
+    mode: 0755
+
+- name: Prepare personalized configs for Kitty 🐱
+  loop: "{{ users.stdout_lines }}"
+  ansible.builtin.blockinfile:
+    path: "~{{ item }}/.config/kitty/kitty.conf"
+    insertafter: EOF
+    create: yes
+    state: present
+    block: |
+      # New windows open in current directory
+      map ctrl+shift+enter launch --cwd=current
+
+      # New tabs open in current directory
+      map ctrl+t new_tab --cwd=current
+
+      # The coveted "zoom" function
+      map ctrl+shift+z toggle_layout stack
+      
+      # disable mouse-click a link to open in a browser
+      mouse_map left click ungrabbed no_op
+
+- name: Disable mouse interactivity in vim (╯°□°)╯︵ ┻━┻
+  ansible.builtin.blockinfile:
+    path: /etc/vim/vimrc
+    marker: "\" {mark} ANSIBLE MANAGED BLOCK"
+    insertafter: EOF
+    state: present
+    block: |
+      set mouse=
+      set ttymouse=
+
+- name: Add sudo-NOPASSWD to users
+  loop: "{{ users.stdout_lines }}"
+  ansible.builtin.lineinfile:
+    path: /etc/sudoers
+    state: present
+    insertafter: EOF
+    line: "{{ item }} ALL=(ALL) NOPASSWD: ALL"
+    validate: /usr/sbin/visudo -cf %s
+
+- name: Initialize Gef for all users
+  ansible.builtin.script: /opt/gef/scripts/gef.sh
+  become_user: "{{ item }}"
+  loop: "{{ users.stdout_lines }}"
+
+- name: Copying over zsh functions file for all users
+  ansible.builtin.copy:
+    src: zsh_functions.zsh
+    dest: "{{ item }}/.zsh_functions"
+    owner: "{{ item }}"
+    group: "{{ item }}"
+    mode: '0640'
+  loop: "{{ users.stdout_lines }}"
+
+- name: Enabling zsh functions
+  loop: "{{ users.stdout_lines }}"
+  ansible.builtin.blockinfile:
+    path: "~{{ item }}/.zshrc"
+    state: present
+    insertafter: EOF
+    owner: "{{ item }}"
+    block: |
+      if [ -f ~/.zsh_functions]; then
+        source ~/.zsh_functions
+      fi
+
+- name: Copying over tmux config to all users
+  ansible.builtin.copy:
+    src: tmux_conf
+    dest: "~{{ item }}/.tmux.conf"
+    owner: "{{ item }}"
+    group: "{{ item }}"
+    mode: '0640'
+  loop: "{{ users.stdout_lines }}"
+
+- name: Create /srv/smb/ directory for payload population
+  ansible.builtin.file:
+    path: /srv/smb
+    state: directory
+    mode: '0755'
+
+- name: Creating IWR share in samba config
+  ansible.builtin.blockinfile:
+    path: /etc/samba/smb.conf
+    insertafter: EOF
+    state: present
+    block: |
+      [iwr]
+        comment = Invoke-WebReq'd em? Damn near killed em!
+        path = /srv/smb
+        guest ok = yes
+        browseable = yes
+        create mask = 0600
+        directory mask = 0755
+
+- name: Ensure that samba doesn't start on boot
+  ansible.builtin.systemd:
+    name: smbd
+    enabled: no
+    state: stopped

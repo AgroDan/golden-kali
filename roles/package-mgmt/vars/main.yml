@@ -1,0 +1,6 @@
+---
+# vars file for package-mgmt
+docker_repo_key: "https://download.docker.com/linux/debian/gpg"
+docker_repo: "deb [arch=amd64] https://download.docker.com/linux/debian bullseye stable"
+sublime_repo_key: "https://download.sublimetext.com/sublimehq-pub.gpg"
+sublime_repo: "deb https://download.sublimetext.com/ apt/stable/"

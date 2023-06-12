@@ -1,0 +1,3 @@
+---
+# vars file for individual-apps
+ysoserial_jar: "https://github.com/frohoff/ysoserial/releases/latest/download/ysoserial-all.jar"
