@@ -1,8 +1,7 @@
 ---
 # tasks file for custom-config
 - name: Getting all interactive users
-  #ansible.builtin.shell "awk -F: '{ if (($3 >= 1000 && $3 != 65534) || $3 == 0) print $1)' /etc/passwd"
-  ansible.builtin.shell: "grep -E '(ba|da|k|c|z|tc|b|a|sc|sh)$' /etc/passwd"
+  ansible.builtin.shell: "awk -F: '{ if (($3 >= 1000 && $3 != 65534) || $3 == 0) print $1}' /etc/passwd"
   register: users
 
 - name: Install Kitty Terminal Emulator 🐱
@@ -78,7 +77,7 @@
 - name: Copying over zsh functions file for all users
   ansible.builtin.copy:
     src: zsh_functions.zsh
-    dest: "{{ item }}/.zsh_functions"
+    dest: "~{{ item }}/.zsh_functions"
     owner: "{{ item }}"
     group: "{{ item }}"
     mode: '0640'
