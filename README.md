@@ -1,8 +1,6 @@
 # Golden Kali
 I believe every Kali VM should be ephemeral. Build it, do your damage, then blow it away. While that's impractical to do it for every single engagement, and since Kali is *almost perfect*, there are still a bunch of things that I modify after a fresh Kali build. Since re-doing all of those tasks is tiresome, I decided to create a solid foundation of "good enough" to start off a fresh build of Kali and download all of the tools I find myself using all the time. So I made this script. It starts a bash script to install pip, then install ansible, then use ansible to download all the appropriate packages, clone the appropriate repositories, and make the appropriate modifications to the system to get it to a point close enough to how I like.
 
-And if you don't like my modifications, I encourage you to fork this repo and make your own changes.
-
 ## Usage
 If you just started up a new instance of **Kali**, to get it to a "proper working setup" that I've come to like, simply run the following command from a terminal:
 
@@ -11,6 +9,18 @@ git clone https://github.com/AgroDan/golden-kali.git && bash ./golden-kali/setup
 ```
 
 The previous command used to be a `curl` instruction piped to `bash`. I changed that to a `git clone` instead to change up the way files would be included. It was cleaner and I was able to mess around with ansible's conditional logic a bit more. Additional changes will now prompt you for your password to execute the ansible changes as root. This is necessary to install packages via apt. However now pip and ansible will be installed as the current user rather than the root user. Note you are still allowing code to execute as the root user to install various tools that *I personally* find very useful. They may not be what you find useful, they may not be what you prefer. Please review the code above as it is all open source for your assurance. Know this: I may be installing malicious software, but I wish no mal-intent to you. Peace, love, and hack all the things.
+
+## I Encourage Forking
+
+I expect that my customizations will not necessarily work for everyone. Like I said, this is tailored to _my_ preferences. Feel free to fork the code, or just straight-up copy word for word and start your own. If you do, here's some notes about how to customize:
+
+- This is mostly ansible scripts. Some working knowledge of tuning ansible is required here. It's not difficult [I assure you](https://docs.ansible.com/).
+- I have split up work into three roles:
+    - If you need to modify packages installed from the Package manager, modify `/roles/package-mgmt/tasks/main.yml`
+    - If you need to modify one-off packages installed from `git`, `pip`, `gem` or even how to compile them, modify `/roles/individual-apps/tasks/main.yml`
+    - If you need to modify desktop-based configurations, modify `/roles/custom-config/tasks/main.yml`
+- Even if you don't know ansible, you can probably guess what you need to change by using what I wrote as an example template.
+- Contributions are always welcome! I know enough ansible to do neat things, but I'm by no means an expert. Feel free to tell me what I'm doing wrong and how I can go about making it even better!
 
 ## Changelog
 
