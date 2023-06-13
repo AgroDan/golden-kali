@@ -10,41 +10,36 @@ if [ -z ${BASH} ]; then
 	exit 1
 fi
 
-# Are we root?
-if [[ $EUID -ne 0 ]]; then
-	echo "This script must be run as sudo or root."
+# Are we root? Because we shouldn't be.
+if [[ $EUID -eq 0 ]]; then
+	echo "This script should be run as a normal user, not root."
 	exit 2
 fi
 
 PATH_TO_SCRIPT=$(dirname $(readlink -f $0))
-ZSH_FUNC_FILE="zsh_functions.zsh"
-TMUX_FILE="tmux_conf"
 
-if [[ ! -e ${PATH_TO_SCRIPT}/${ZSH_FUNC_FILE} ]] && [[ ! -e ${PATH_TO_SCRIPT}/${TMUX_FILE} ]]; then
-	echo "Cannot find supporting files! Please clone repository and try again!"
-	exit 3
-fi
-
-echo "***********************************"
-echo "*        Installing pip           *"
-echo "***********************************"
+echo "************************************"
+echo "*         Installing pip           *"
+echo "************************************"
 
 curl -s https://bootstrap.pypa.io/get-pip.py -o /tmp/get-pip.py
 python3 /tmp/get-pip.py --user --no-warn-script-location
 
-export PATH=$PATH:/root/.local/bin
+export PATH=$PATH:~/.local/bin
 
-echo "***********************************"
-echo "*       Installing ansible        *"
-echo "***********************************"
+echo "************************************"
+echo "*        Installing ansible        *"
+echo "************************************"
 
 pip install ansible
 
-echo "***********************************"
-echo "*      Running Kali playbook      *"
-echo "***********************************"
+echo "************************************"
+echo "*   Running Golden Kali Playbook   *"
+echo "************************************"
 
-ansible-playbook ${PATH_TO_SCRIPT}/kali.yml --extra-vars "tmux=${PATH_TO_SCRIPT}/${TMUX_FILE} zsh_func=${PATH_TO_SCRIPT}/${ZSH_FUNC_FILE}"
+echo
+echo "Please enter your password to configure system:"
+ansible-playbook ${PATH_TO_SCRIPT}/main.yml --ask-become-pass
 
 echo "***********************************"
 echo "*             Done!               *"

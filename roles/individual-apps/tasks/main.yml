@@ -1,0 +1,106 @@
+---
+# tasks file for individual-apps
+- name: Install pwntools
+  ansible.builtin.pip:
+    name: git+https://github.com/Gallopsled/pwntools.git@dev
+
+- name: Clone Invoke-Obfuscation (•_•) ( •_•)>⌐■-■ (⌐■_■)
+  ansible.builtin.git:
+    repo: 'https://github.com/danielbohannon/Invoke-Obfuscation'
+    dest: /opt/Invoke-Obfuscation
+
+- name: Clone JumboJohn
+  ansible.builtin.git:
+    repo: 'https://github.com/magnumripper/JohnTheRipper'
+    dest: /opt/JohnTheRipper
+
+- name: Compiling JumboJohn, hold onto yer butts...
+  ansible.builtin.command: chdir=/opt/JohnTheRipper/src {{ item }}
+  with_items:
+    - ./configure
+    - make
+    - make install
+
+- name: Install trufflehog
+  ansible.builtin.pip:
+    name: trufflehog
+
+- name: Install LDAPDomainDump
+  ansible.builtin.pip:
+    name: ldapdomaindump
+
+- name: Clone Nishang
+  ansible.builtin.git:
+    repo: 'https://github.com/samratashok/nishang'
+    dest: /opt/nishang
+
+- name: Clone Chisel
+  ansible.builtin.git:
+    repo: 'https://github.com/jpillora/chisel'
+    dest: /opt/chisel
+
+- name: Clone LinEnum
+  ansible.builtin.git:
+    repo: 'https://github.com/rebootuser/LinEnum'
+    dest: /opt/LinEnum
+
+- name: Clone PowerSploit
+  ansible.builtin.git:
+    repo: 'https://github.com/PowerShellMafia/PowerSploit'
+    dest: /opt/PowerSploit
+
+- name: Clone Impacket
+  ansible.builtin.git:
+    repo: 'https://github.com/SecureAuthCorp/impacket'
+    dest: /opt/impacket
+
+- name: Installing Impacket
+  ansible.builtin.shell: "python3 /opt/impacket/setup.py build && python3 /opt/impacket/setup.py install"
+  args:
+    chdir: /opt/impacket
+
+- name: Clone Bloodhound.py
+  ansible.builtin.git:
+    repo: 'https://github.com/fox-it/BloodHound.py.git'
+    dest: /opt/BloodHound.py
+
+- name: Clone PyFuscation
+  ansible.builtin.git:
+    repo: 'https://github.com/CBHue/PyFuscation.git'
+    dest: /opt/PyFuscation
+
+- name: Clone Gef
+  ansible.builtin.git:
+    repo: 'https://github.com/hugsy/gef.git'
+    dest: /opt/gef
+
+- name: Clone Static Binaries
+  ansible.builtin.git:
+    repo: 'https://github.com/andrew-d/static-binaries'
+    dest: /opt/static-binaries
+
+- name: Clone Ysoserial
+  ansible.builtin.git:
+    repo: 'https://github.com/frohoff/ysoserial'
+    dest: /opt/ysoserial
+
+- name: Clone Kerbrute
+  ansible.builtin.git:
+    repo: 'https://github.com/ropnop/kerbrute.git'
+    dest: /opt/kerbrute
+
+- name: Building Kerbrute...
+  ansible.builtin.command: chdir=/opt/kerbrute make linux
+
+- name: Downloading Ysoserial JAR file
+  ansible.builtin.get_url:
+    url: "{{ ysoserial_jar }}"
+    dest: /opt/ysoserial/ysoserial-all.jar
+    mode: '0644'
+
+- name: Get Evil-WinRM via gem installer
+  community.general.gem:
+    name: evil-winrm
+    norc: yes
+    state: latest
+    user_install: no

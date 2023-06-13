@@ -1,0 +1,3 @@
+---
+# vars file for custom-config
+kitty_installer: "https://sw.kovidgoyal.net/kitty/installer.sh"
