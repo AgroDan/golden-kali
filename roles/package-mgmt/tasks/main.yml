@@ -7,6 +7,22 @@
   ansible.builtin.apt_repository:
     repo: "{{ docker_repo }}"
     state: present
+    
+- name: Update apt and install docker-ce
+  apt:
+    name: docker-ce
+    state: latest
+    update_cache: true
+
+- name: Install Docker Module for Python
+  pip:
+    name: docker
+
+- name: Starting docker service
+  service:
+    name: docker
+    state: started
+    enabled: yes
 
 - name: Add Sublime Text repo key
   ansible.builtin.shell: curl -fsSL {{ sublime_repo_key }} | gpg --dearmor --batch --yes -o /etc/apt/trusted.gpg.d/sublime-text-keyring.gpg
@@ -33,7 +49,6 @@
     - curl
     - default-jdk
     - default-jre
-    - docker
     - docker-compose
     - eog
     - feroxbuster
