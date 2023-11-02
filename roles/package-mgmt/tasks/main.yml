@@ -33,7 +33,7 @@
     - curl
     - default-jdk
     - default-jre
-    - docker
+    - docker-ce
     - docker-compose
     - eog
     - feroxbuster
