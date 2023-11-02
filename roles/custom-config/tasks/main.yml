@@ -91,7 +91,7 @@
     insertafter: EOF
     owner: "{{ item }}"
     block: |
-      if [ -f ~/.zsh_functions]; then
+      if [ -f ~/.zsh_functions ]; then
         source ~/.zsh_functions
       fi
 
