@@ -49,6 +49,7 @@
     - curl
     - default-jdk
     - default-jre
+    - docker-ce
     - docker-compose
     - eog
     - feroxbuster
