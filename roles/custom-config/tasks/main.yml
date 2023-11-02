@@ -104,6 +104,13 @@
     mode: '0640'
   loop: "{{ users.stdout_lines }}"
 
+- name: Enable SSH Subshell
+  ansible.builtin.lineinfile:
+    path: /etc/ssh/ssh_config
+    state: present
+    insertafter: EOF
+    line: 'EnableEscapeCommandline=yes'
+
 - name: Create /srv/smb/ directory for payload population
   ansible.builtin.file:
     path: /srv/smb
