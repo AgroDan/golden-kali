@@ -19,19 +19,10 @@ fi
 PATH_TO_SCRIPT=$(dirname $(readlink -f $0))
 
 echo "************************************"
-echo "*         Installing pip           *"
-echo "************************************"
-
-curl -s https://bootstrap.pypa.io/get-pip.py -o /tmp/get-pip.py
-python3 /tmp/get-pip.py --user --no-warn-script-location
-
-export PATH=$PATH:~/.local/bin
-
-echo "************************************"
 echo "*        Installing ansible        *"
 echo "************************************"
 
-pip install ansible
+pipx install --include-deps ansible
 
 echo "************************************"
 echo "*   Running Golden Kali Playbook   *"
