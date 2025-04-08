@@ -1,10 +1,5 @@
 ---
 # tasks file for individual-apps
-- name: Install pwntools
-  community.general.pipx:
-    name: pwntools
-    source: git+https://github.com/Gallopsled/pwntools.git@dev
-
 - name: Clone Invoke-Obfuscation (•_•) ( •_•)>⌐■-■ (⌐■_■)
   ansible.builtin.git:
     repo: 'https://github.com/danielbohannon/Invoke-Obfuscation'
@@ -21,14 +16,6 @@
     - ./configure
     - make
     - make install
-
-- name: Install trufflehog
-  community.general.pipx:
-    name: trufflehog
-
-- name: Install LDAPDomainDump
-  community.general.pipx:
-    name: ldapdomaindump
 
 - name: Clone Nishang
   ansible.builtin.git:
