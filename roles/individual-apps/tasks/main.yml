@@ -85,10 +85,3 @@
     url: "{{ ysoserial_jar }}"
     dest: /opt/ysoserial/ysoserial-all.jar
     mode: '0644'
-
-- name: Get Evil-WinRM via gem installer
-  community.general.gem:
-    name: evil-winrm
-    norc: yes
-    state: latest
-    user_install: no

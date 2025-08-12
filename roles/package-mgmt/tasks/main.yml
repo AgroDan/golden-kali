@@ -48,6 +48,7 @@
     - docker-ce
     - docker-compose
     - eog
+    - evil-winrm
     - feroxbuster
     - flex
     - forensics-extra
@@ -67,7 +68,7 @@
     - ltrace
     - ncat
     - neo4j
-    - ntpdate
+    - ntpsec-ntpdate
     - mingw-w64
     - patch
     - powershell
