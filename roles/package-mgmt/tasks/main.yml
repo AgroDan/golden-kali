@@ -46,7 +46,6 @@
     - default-jdk
     - default-jre
     - docker-ce
-    - docker-compose
     - eog
     - evil-winrm
     - feroxbuster
